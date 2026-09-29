@@ -1,250 +1,205 @@
-# ðŸ“ Java OOP - Inheritance, Encapsulation & Polymorphism
+# Java OOP - Inheritance, Encapsulation, dan Polymorphism
 
-Program Java yang mendemonstrasikan konsep **Encapsulation**, **Inheritance**, dan **Polymorphism** menggunakan hirarki kelas bentuk geometri.
+Program Java yang mendemonstrasikan konsep Encapsulation, Inheritance, dan Polymorphism menggunakan hirarki kelas bentuk geometri.
 
 ---
 
-## ðŸ“ Struktur Project
+## Struktur Project
 
 ```
 Inherits/
-â”œâ”€â”€ src/
-â”‚   â”œâ”€â”€ Bentuk.java         â† Parent class (superclass)
-â”‚   â”œâ”€â”€ BujurSangkar.java   â† Child class dari Bentuk
-â”‚   â”œâ”€â”€ Lingkaran.java      â† Child class dari Bentuk
-â”‚   â”œâ”€â”€ Silinder.java       â† Child class dari Lingkaran
-â”‚   â””â”€â”€ Main.java           â† Entry point program
-â””â”€â”€ bin/
-    â””â”€â”€ (compiled .class files)
+├── src/
+│   ├── Bentuk.java         (Parent class / Superclass)
+│   ├── BujurSangkar.java   (Child class dari Bentuk)
+│   ├── Lingkaran.java      (Child class dari Bentuk)
+│   ├── Silinder.java       (Child class dari Lingkaran)
+│   └── Main.java           (Entry point program)
+└── bin/
+    └── (compiled .class files)
 ```
 
 ---
 
-## ðŸ”— Diagram Hierarki Kelas
+## Hierarki Kelas
 
 ```
 Bentuk
-â”œâ”€â”€ BujurSangkar  (extends Bentuk)
-â””â”€â”€ Lingkaran     (extends Bentuk)
-      â””â”€â”€ Silinder  (extends Lingkaran)
+├── BujurSangkar  (extends Bentuk)
+└── Lingkaran     (extends Bentuk)
+      └── Silinder  (extends Lingkaran)
 ```
 
 ---
 
-## ðŸ§± 1. Encapsulation (Enkapsulasi)
+## 1. Encapsulation
 
-**Encapsulation** adalah konsep menyembunyikan data (atribut) dari akses luar, dan hanya mengizinkan akses melalui method getter dan setter.
+Encapsulation adalah konsep menyembunyikan atribut dari akses luar menggunakan access modifier `private`, dan hanya mengizinkan akses melalui method getter dan setter.
 
-### Contoh dalam kode:
-
-**`BujurSangkar.java`** â€” atribut `sisi` bersifat `private`, hanya bisa diakses via getter/setter:
+Contoh pada BujurSangkar.java:
 
 ```java
 public class BujurSangkar extends Bentuk {
-    private double sisi;  // â† PRIVATE, tidak bisa diakses langsung dari luar
+    private double sisi; // atribut private, tidak bisa diakses langsung dari luar
 
-    public double getSisi() {    // â† Getter: untuk membaca nilai sisi
+    public double getSisi() {       // getter untuk membaca nilai sisi
         return sisi;
     }
 
-    public void setSisi(double sisi) {  // â† Setter: untuk mengubah nilai sisi
+    public void setSisi(double sisi) { // setter untuk mengubah nilai sisi
         this.sisi = sisi;
     }
 }
 ```
 
-**`Lingkaran.java`** â€” atribut `radius` bersifat `private`:
+Contoh pada Lingkaran.java:
 
 ```java
 public class Lingkaran extends Bentuk {
-    private static final double PHI = 3.14159265358979;  // Konstanta kelas
-    private double radius;  // â† PRIVATE
+    private static final double PHI = 3.14159265358979; // konstanta kelas
+    private double radius; // atribut private
 
     public double getRadius() { return radius; }
     public void setRadius(double r) { this.radius = r; }
 }
 ```
 
-**`Silinder.java`** â€” atribut `tinggi` bersifat `private`:
+Contoh pada Silinder.java:
 
 ```java
 public class Silinder extends Lingkaran {
-    private double tinggi;  // â† PRIVATE
+    private double tinggi; // atribut private
 
     public double getTinggi() { return tinggi; }
     public void setTinggi(double t) { this.tinggi = t; }
 }
 ```
 
-### Tabel Encapsulation per Kelas
+Tabel Encapsulation:
 
-| Kelas         | Atribut     | Access Modifier | Getter           | Setter                  |
-|---------------|-------------|-----------------|------------------|-------------------------|
-| Bentuk        | warna       | public          | `getWarna()`     | `setWarna(String)`      |
-| BujurSangkar  | sisi        | private         | `getSisi()`      | `setSisi(double)`       |
-| Lingkaran     | radius      | private         | `getRadius()`    | `setRadius(double)`     |
-| Silinder      | tinggi      | private         | `getTinggi()`    | `setTinggi(double)`     |
+| Kelas        | Atribut | Access Modifier | Getter        | Setter             |
+|--------------|---------|-----------------|---------------|--------------------|
+| Bentuk       | warna   | public          | getWarna()    | setWarna(String)   |
+| BujurSangkar | sisi    | private         | getSisi()     | setSisi(double)    |
+| Lingkaran    | radius  | private         | getRadius()   | setRadius(double)  |
+| Silinder     | tinggi  | private         | getTinggi()   | setTinggi(double)  |
 
 ---
 
-## ðŸ§¬ 2. Inheritance (Pewarisan)
+## 2. Inheritance
 
-**Inheritance** adalah konsep di mana sebuah class (child/subclass) mewarisi atribut dan method dari class lain (parent/superclass) menggunakan keyword `extends`.
+Inheritance adalah konsep di mana sebuah class (child) mewarisi atribut dan method dari class lain (parent) menggunakan keyword `extends`. Child class juga dapat memanggil constructor parent menggunakan `super()`.
 
-### Hierarki Inheritance:
-
-```
-Bentuk  â†â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ (Parent/Superclass)
-  â”‚
-  â”œâ”€â”€ BujurSangkar extends Bentuk  â† mewarisi: warna, getWarna(), setWarna(), printInfo()
-  â”‚
-  â””â”€â”€ Lingkaran extends Bentuk     â† mewarisi: warna, getWarna(), setWarna(), printInfo()
-        â”‚
-        â””â”€â”€ Silinder extends Lingkaran â† mewarisi: radius, getRadius(), hitungLuas(), dll.
-```
-
-### Contoh dalam kode:
-
-**`Bentuk.java`** â€” Superclass:
+Contoh pada BujurSangkar.java:
 
 ```java
-public class Bentuk {
-    public String warna;
-
-    public Bentuk(String warna) {
-        this.warna = warna;
-    }
-
-    public String getWarna() { return warna; }
-    public void setWarna(String warna) { this.warna = warna; }
-    public void printInfo() {
-        System.out.println("Bentuk berwarna " + warna);
-    }
-}
-```
-
-**`BujurSangkar.java`** â€” mewarisi Bentuk dengan `extends`:
-
-```java
-public class BujurSangkar extends Bentuk {
+public class BujurSangkar extends Bentuk { // mewarisi class Bentuk
     public BujurSangkar(double sisi, String warna) {
-        super(warna);  // â† memanggil constructor parent class Bentuk
+        super(warna); // memanggil constructor parent class Bentuk
         this.sisi = sisi;
     }
 }
 ```
 
-**`Lingkaran.java`** â€” mewarisi Bentuk:
+Contoh pada Lingkaran.java:
 
 ```java
-public class Lingkaran extends Bentuk {
+public class Lingkaran extends Bentuk { // mewarisi class Bentuk
     public Lingkaran(double radius, String warna) {
-        super(warna);  // â† memanggil constructor parent class Bentuk
+        super(warna); // memanggil constructor parent class Bentuk
         this.radius = radius;
     }
 }
 ```
 
-**`Silinder.java`** â€” mewarisi Lingkaran (multi-level inheritance):
+Contoh pada Silinder.java (multi-level inheritance):
 
 ```java
-public class Silinder extends Lingkaran {
+public class Silinder extends Lingkaran { // mewarisi class Lingkaran
     public Silinder(double tinggi, double radius, String warna) {
-        super(radius, warna);  // â† memanggil constructor parent class Lingkaran
+        super(radius, warna); // memanggil constructor parent class Lingkaran
         this.tinggi = tinggi;
     }
 
     public double hitungVolume() {
-        return hitungLuas() * tinggi;  // â† hitungLuas() diwarisi dari Lingkaran!
+        return hitungLuas() * tinggi; // hitungLuas() diwarisi dari Lingkaran
     }
 }
 ```
 
-### Tabel Pewarisan
+Tabel Pewarisan:
 
-| Subclass      | Superclass  | Mewarisi                                          |
-|---------------|-------------|---------------------------------------------------|
-| BujurSangkar  | Bentuk      | `warna`, `getWarna()`, `setWarna()`, `printInfo()`|
-| Lingkaran     | Bentuk      | `warna`, `getWarna()`, `setWarna()`, `printInfo()`|
-| Silinder      | Lingkaran   | `radius`, `getRadius()`, `setRadius()`, `hitungLuas()`, + semua dari Bentuk |
+| Subclass     | Superclass | Yang Diwarisi                                     |
+|--------------|------------|---------------------------------------------------|
+| BujurSangkar | Bentuk     | warna, getWarna(), setWarna(), printInfo()         |
+| Lingkaran    | Bentuk     | warna, getWarna(), setWarna(), printInfo()         |
+| Silinder     | Lingkaran  | radius, getRadius(), setRadius(), hitungLuas(), dan semua dari Bentuk |
 
 ---
 
-## ðŸŽ­ 3. Polymorphism (Polimorfisme)
+## 3. Polymorphism
 
-**Polymorphism** adalah kemampuan suatu method untuk memiliki banyak bentuk/perilaku berbeda. Dalam kode ini, polymorphism terjadi melalui **Method Overriding** â€” child class mendefinisikan ulang method `printInfo()` yang ada di parent class.
+Polymorphism adalah kemampuan sebuah method untuk memiliki banyak bentuk atau perilaku berbeda tergantung pada class yang mengimplementasikannya. Dalam kode ini, polymorphism terjadi melalui method overriding pada method `printInfo()`.
 
-### Contoh Method Overriding `printInfo()`:
+Bentuk.java (method asli):
 
-**`Bentuk.java`** (Original):
 ```java
 public void printInfo() {
     System.out.println("Bentuk berwarna " + warna);
-    // Output: Bentuk berwarna merah
 }
 ```
 
-**`BujurSangkar.java`** (@Override):
+BujurSangkar.java (override):
+
 ```java
 @Override
 public void printInfo() {
     System.out.println("Bujursangkar berwarna " + getWarna() + ", luas = " + hitungLuas());
-    // Output: Bujursangkar berwarna biru, luas = 25.0
 }
 ```
 
-**`Lingkaran.java`** (@Override):
+Lingkaran.java (override):
+
 ```java
 @Override
 public void printInfo() {
     System.out.println("Lingkaran " + getWarna() + ", luas = " + hitungLuas());
-    // Output: Lingkaran kuning, luas = 153.938...
 }
 ```
 
-**`Silinder.java`** (@Override):
+Silinder.java (override):
+
 ```java
 @Override
 public void printInfo() {
     System.out.println("Silinder warna " + getWarna() + ", volume = " + hitungVolume());
-    // Output: Silinder warna hijau, volume = 785.398...
 }
 ```
 
-### Polymorphism via Referensi Parent Class:
-
-```java
-// Semua objek diperlakukan sebagai tipe Bentuk (parent)
-Bentuk[] shapes = {
-    new Bentuk("merah"),
-    new BujurSangkar(5.0, "biru"),
-    new Lingkaran(7.0, "kuning"),
-    new Silinder(10.0, 5.0, "hijau")
-};
-
-// printInfo() memanggil versi yang berbeda sesuai objek aslinya
-for (Bentuk shape : shapes) {
-    shape.printInfo();  // â† Polymorphism!
-}
-```
+Meski method yang dipanggil sama yaitu `printInfo()`, setiap class menghasilkan output yang berbeda sesuai implementasinya masing-masing.
 
 ---
 
-## â–¶ï¸ Cara Menjalankan Program
+## Cara Menjalankan Program
 
-### Kompilasi:
-```bash
+Kompilasi:
+
+```
 javac src/Bentuk.java src/BujurSangkar.java src/Lingkaran.java src/Silinder.java src/Main.java -d bin
 ```
 
-### Jalankan:
-```bash
+Jalankan:
+
+```
 java -cp bin Main
 ```
 
 ---
 
-## ðŸ“¸ Screenshot Output Program
+## Screenshot Output Program
+
+![Screenshot Output Program](Screenshot%202026-09-29%20094553.png)
+
+Output di terminal:
 
 ```
 Bentuk berwarna merah
@@ -264,23 +219,23 @@ Silinder warna oranye, volume = 424.1150082346217
 
 ---
 
-## ðŸ“ Rumus Perhitungan
+## Rumus Perhitungan
 
-| Bentuk       | Rumus                          |
-|--------------|--------------------------------|
-| BujurSangkar | Luas = sisi Ã— sisi             |
-| Lingkaran    | Luas = Ï€ Ã— radiusÂ²             |
-| Silinder     | Volume = Ï€ Ã— radiusÂ² Ã— tinggi  |
+| Bentuk       | Rumus                         |
+|--------------|-------------------------------|
+| BujurSangkar | Luas = sisi x sisi            |
+| Lingkaran    | Luas = PHI x radius x radius  |
+| Silinder     | Volume = Luas x tinggi        |
 
-> **Nilai PHI (Ï€)** = `3.14159265358979` â€” dijadikan konstanta kelas (`static final`) di dalam `Lingkaran.java`
+Nilai PHI = 3.14159265358979 (konstanta kelas di Lingkaran.java)
 
 ---
 
-## ðŸ‘¤ Informasi
+## Informasi
 
-| Field    | Keterangan                      |
-|----------|---------------------------------|
-| Mata Kuliah | Pemrograman Berbasis Objek   |
-| Semester | 5                               |
-| Topik    | Inheritance, Encapsulation, Polymorphism |
-| Bahasa   | Java                            |
+| Field       | Keterangan                                       |
+|-------------|--------------------------------------------------|
+| Mata Kuliah | Pemrograman Berbasis Objek                       |
+| Semester    | 5                                                |
+| Topik       | Inheritance, Encapsulation, Polymorphism         |
+| Bahasa      | Java                                             |
